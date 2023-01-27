@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Hubtel.Wallets.Api.DTOs;
 using Hubtel.Wallets.Api.Models;
 
 namespace Hubtel.Wallets.Api.Services
@@ -9,16 +10,16 @@ namespace Hubtel.Wallets.Api.Services
     {
         Task CreateUser(User value);
 
-        Task<IEnumerable<User>> GetUsers();
+        Task<IEnumerable<UserDto>> GetUsers();
         
-        Task<User> GetUser(int id);
+        Task<UserDto> GetUser(int id);
         
         Task CreateWallet(Wallet value);
         
-        Task<IEnumerable<Wallet>> GetUserWallets(int id);
+        Task<IEnumerable<WalletDto>> GetUserWallets(int id);
         
         
-        Task<Wallet> GetWallet(int id);
+        Task<WalletDto> GetWallet(int id);
 
         Task DeleteWallet(Wallet wallet);
 
@@ -26,10 +27,12 @@ namespace Hubtel.Wallets.Api.Services
         
         Task<Wallet> CheckAccountNumber(Wallet wallet);
         
-        Task<IEnumerable<Wallet>> GetAllWallets();
+        Task<IEnumerable<WalletDto>> GetAllWallets();
 
-     
 
+        Task<User> GetUserValidation(int id);
+
+        Task<Wallet> GetWalletValidation(int walletId);
     }
 
 

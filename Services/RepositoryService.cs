@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Hubtel.Wallets.Api.DTOs;
 using Hubtel.Wallets.Api.Models;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hubtel.Wallets.Api.Services
@@ -20,17 +22,17 @@ namespace Hubtel.Wallets.Api.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<User>> GetUsers()
+        public async Task<IEnumerable<UserDto>> GetUsers()
         {
-            var users = await _context.Users.ToListAsync();
+            var users = await _context.Users.ProjectToType<UserDto>().ToListAsync();
 
             return users;
         }
 
-        public async Task<User> GetUser(int id)
+        public async Task<UserDto> GetUser(int id)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u=>u.UserId==id);
-            return user;
+            return user.Adapt<UserDto>();
         }
 
         public async Task CreateWallet(Wallet wallet)
@@ -39,17 +41,17 @@ namespace Hubtel.Wallets.Api.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Wallet>> GetUserWallets(int id)
+        public async Task<IEnumerable<WalletDto>> GetUserWallets(int id)
         {
-            var wallets = await _context.Wallets.Where(u=>u.UserId==id).ToListAsync();
+            var wallets = await _context.Wallets.Where(u=>u.UserId==id).ProjectToType<WalletDto>().ToListAsync();
             return wallets;
 
         }
 
-        public async Task<Wallet> GetWallet(int walletId)
+        public async Task<WalletDto> GetWallet(int walletId)
         {
             var wallet = await _context.Wallets.FirstOrDefaultAsync(w=>w.WalletId==walletId);
-            return wallet;
+            return wallet.Adapt<WalletDto>();
         }
 
         public  async Task DeleteWallet(Wallet wallet)
@@ -75,13 +77,26 @@ namespace Hubtel.Wallets.Api.Services
             return accountPresent;
         }
 
-        public async Task<IEnumerable<Wallet>> GetAllWallets()
+        public async Task<IEnumerable<WalletDto>> GetAllWallets()
         {
-            var wallets = await _context.Wallets.ToListAsync();
+            var wallets = await _context.Wallets.ProjectToType<WalletDto>().ToListAsync();
             return wallets;
+        }
+        
+        
+        
+        public async Task<User> GetUserValidation(int id)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u=>u.UserId==id);
+            return user;
         }
 
 
+        public async Task<Wallet> GetWalletValidation(int walletId)
+        {
+            var wallet = await _context.Wallets.FirstOrDefaultAsync(w=>w.WalletId==walletId);
+            return wallet;
+        }
 
     }
 }

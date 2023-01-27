@@ -89,7 +89,7 @@ namespace Hubtel.Wallets.Api.Controllers
                 return NotFound();
             
             //Checks if wallet exists
-            var wallet = await _repositoryService.GetWallet(walletId);
+            var wallet = await _repositoryService.GetWalletValidation(walletId);
             if (wallet == null)
                 return NotFound();
             
@@ -101,7 +101,7 @@ namespace Hubtel.Wallets.Api.Controllers
 
             //Deletes wallet
             await _repositoryService.DeleteWallet(wallet);
-            return Ok();
+            return NoContent();
         }
 
 
@@ -119,9 +119,31 @@ namespace Hubtel.Wallets.Api.Controllers
         [Route("{id:int}")]
         public async Task<IActionResult> GetWallet(int id)
         {
-            var wallets = await _repositoryService.GetWallet(id);
-            return Ok(wallets);
+            //Checks if wallet exists
+            var wallet = await _repositoryService.GetWallet(id);
+            if (wallet == null)
+                return NotFound();
+            
+            
+            return Ok(wallet);
         }
+        
+        
+        //Deletes a wallet
+        [HttpDelete()]
+        [Route("{walletId:int}")]
+        public async Task<IActionResult> DeleteWallet(int walletId)
+        {
+            //Checks if wallet exists
+            var wallet = await _repositoryService.GetWalletValidation(walletId);
+            if (wallet == null)
+                return NotFound();
+
+            //Deletes wallet
+            await _repositoryService.DeleteWallet(wallet);
+            return NoContent();
+        }
+
         
     }
 }

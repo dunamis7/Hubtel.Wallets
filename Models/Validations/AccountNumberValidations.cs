@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Hubtel.Wallets.Api.DTOs;
 using Hubtel.Wallets.Api.Models.Enums;
 
 namespace Hubtel.Wallets.Api.Models.Validations
