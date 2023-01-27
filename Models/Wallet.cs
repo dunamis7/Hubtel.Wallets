@@ -33,8 +33,7 @@ namespace Hubtel.Wallets.Api.Models
         
         [Required]
         public int UserId { get; set; }
-
-        [JsonIgnore]
+        
         public virtual User User { get; set; }
     }
 
