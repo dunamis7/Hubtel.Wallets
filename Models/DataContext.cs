@@ -18,7 +18,8 @@ namespace Hubtel.Wallets.Api.Models
                 .HasOne(u => u.User)
                 .WithMany(w => w.Wallets)
                 .HasForeignKey(a => a.UserId);
-
         }
+        
+        
     }
 }

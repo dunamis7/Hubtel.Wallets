@@ -98,5 +98,32 @@ namespace Hubtel.Wallets.Api.Services
             return wallet;
         }
 
+        public async Task<bool> CheckPhoneNumberForSameUser(Wallet wallet)
+        {
+            var user = await _context.Wallets.FirstOrDefaultAsync(u=>u.UserId==wallet.UserId);
+
+            if (user == null)
+            {
+                return false;
+            }
+            
+            if (user.PhoneNumber != wallet.PhoneNumber)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> CheckPhoneNumberForDifferentUser(Wallet wallet)
+        {
+            var user = await _context.Wallets.FirstOrDefaultAsync(u=>u.PhoneNumber == wallet.PhoneNumber);
+
+            if (user != null && user.UserId != wallet.UserId)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

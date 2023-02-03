@@ -3,7 +3,6 @@ using Hubtel.Wallets.Api.Models.Enums;
 
 namespace Hubtel.Wallets.Api.Models.Validations
 {
-    
     public class AccountSchemeValidations : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)

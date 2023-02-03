@@ -29,10 +29,27 @@ namespace Hubtel.Wallets.Api.Controllers
             var canCreateWallet =_repositoryService.NumberOfWallets(wallet.UserId);
             if (canCreateWallet == true) 
                 return BadRequest("Can't create more than 5 wallets");
+
+
+            //Checks if a user uses a different phone number than what he previously used 
+            var phoneNumberExists = await _repositoryService.CheckPhoneNumberForSameUser(wallet);
+            if (phoneNumberExists==true)
+            {
+                return BadRequest("Use same phone number used for previous wallets");
+            }
+            
+            
+            //Checks if a new user uses a phone number already in the database 
+            var phoneNumberExist = await _repositoryService.CheckPhoneNumberForDifferentUser(wallet);
+            if (phoneNumberExist==true)
+            {
+                return BadRequest("Phone number exists for another user");
+            }
+            
             
             //Add the wallet
             await _repositoryService.CreateWallet(wallet);
-            return Ok($"User {wallet.AccountNumber} created");
+            return Ok($"Wallet {wallet.AccountNumber} created");
         }
 
 

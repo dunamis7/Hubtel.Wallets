@@ -33,6 +33,12 @@ namespace Hubtel.Wallets.Api.Services
         Task<User> GetUserValidation(int id);
 
         Task<Wallet> GetWalletValidation(int walletId);
+        
+        Task<bool> CheckPhoneNumberForSameUser(Wallet wallet);
+        
+        Task<bool> CheckPhoneNumberForDifferentUser(Wallet wallet);
+
+        
     }
 
 
