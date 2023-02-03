@@ -32,16 +32,16 @@ namespace Hubtel.Wallets.Api.Controllers
 
 
             //Checks if a user uses a different phone number than what he previously used 
-            var phoneNumberExists = await _repositoryService.CheckPhoneNumberForSameUser(wallet);
-            if (phoneNumberExists==true)
+            var phoneNumberForSameUser = await _repositoryService.CheckPhoneNumberForSameUser(wallet);
+            if (phoneNumberForSameUser==true)
             {
                 return BadRequest("Use same phone number used for previous wallets");
             }
             
             
             //Checks if a new user uses a phone number already in the database 
-            var phoneNumberExist = await _repositoryService.CheckPhoneNumberForDifferentUser(wallet);
-            if (phoneNumberExist==true)
+            var phoneNumberForDifferentUser = await _repositoryService.CheckPhoneNumberForDifferentUser(wallet);
+            if (phoneNumberForDifferentUser==true)
             {
                 return BadRequest("Phone number exists for another user");
             }
